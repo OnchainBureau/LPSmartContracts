@@ -1,5 +1,18 @@
 # OnchainBureauMMv4
 
+## Current review revision: permissionless fixed-price initialization (V2)
+
+[`OnchainBureauPublicMMV4V2.sol`](src/OnchainBureauPublicMMV4V2.sol) removes only
+the requirement that the initializer be the fee operator. Anyone may initialize
+the one canonical pool at its immutable starting price. Wrong prices, different
+pool configurations and repeat initialization remain rejected. Initializing does
+not grant fee authority or access to Safe assets. Owner/operator powers remain
+unchanged. An outsider can trigger launch timing; integrations must handle an
+already-initialized pool using regular LP minting, not initialize-and-mint.
+
+Earlier source files below are preserved for historical deployments. Do not
+confuse their deployment addresses with this revision.
+
 ## Undeployed public-routing candidate
 
 This branch additionally publishes [`OnchainBureauPublicMMV4`](src/OnchainBureauPublicMMV4.sol).

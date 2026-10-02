@@ -1,5 +1,38 @@
 # OnchainBureauMMv4
 
+## Undeployed public-routing candidate
+
+This branch additionally publishes [`OnchainBureauPublicMMV4`](src/OnchainBureauPublicMMV4.sol).
+It is **not deployed, explorer-verified, audited or approved by Uniswap Labs**.
+The addresses below identify the original contract, NOT this candidate. Publishing
+this file does not change the existing pool or its deployed hook.
+
+The candidate removes discretionary swap halts, external risk-oracle gating and
+all liquidity-entry policy callbacks. Its permission bitmap is `0x30c0`:
+before/after initialize and before/after swap. Return-delta flags remain disabled;
+no custom hook data is required, and native protocol-fee accounting is preserved.
+Dynamic LP fees remain hard-bounded to 0.05%–2.50%. Owner/operator fee powers,
+directional fee bias and optional swap telemetry remain. Initialization is still
+operator-authorized for one immutable pool and initial price. There are no
+range-crossing events in this candidate. No guarantee of routing approval is made.
+
+The original rejection did not identify a specific reason. These changes are a
+reduced-capability design, not proof that the removed features caused rejection.
+Dynamic fees still require review. A new deployment, verified source and funded
+pool are needed before resubmission; the old pool cannot change its hook.
+
+Validation on 2026-10-02: 13 candidate tests passed (including 1,000 fee-bound
+fuzz cases). A local Robinhood-mainnet fork at block 78252813 passed fresh
+Safe/Zodiac grants, bootstrap/revocation, unrelated-call denials and the actual
+Rust MM's buys/sells against external liquidity, mint/reposition/close lifecycle.
+An initial integration failure was fixed by retaining constant open/unpaused
+LP-policy status getters; they cannot restrict liquidity or be configured.
+This evidence does not constitute an audit or a public-chain candidate deployment.
+
+The candidate uses the same compiler settings and dependency revisions documented
+below. Only hook source and documentation are published here, not operational
+configuration, signing material or the liquidity manager.
+
 Hook-only source publication for the EMRL.X / USDG Uniswap v4 pool on Robinhood
 Chain. This repository contains the hook and its required custom risk-oracle
 interface; it does not contain the liquidity manager, market-making bot, deployment
